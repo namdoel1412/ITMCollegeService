@@ -1,3 +1,5 @@
+using ITMCollegeService.Context;
+using ITMCollegeService.Extensions;
 using ITMCollegeService.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +30,7 @@ namespace ITMCollegeService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.CongigureMySqlConnection<ITMCollegeContext>(Configuration);
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
@@ -37,7 +40,7 @@ namespace ITMCollegeService
                     .AllowCredentials());
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IAdminRepo, AdminRepo>();
+            services.AddScoped<IAdminRepo, AdminRepo_2>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {

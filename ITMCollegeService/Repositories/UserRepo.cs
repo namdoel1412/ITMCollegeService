@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ITMCollegeService.Repositories
 {
-    public class AdminRepo
+    public class UserRepo
     {
     }
 }
