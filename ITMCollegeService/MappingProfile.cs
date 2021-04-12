@@ -13,6 +13,9 @@ namespace ITMCollegeService
         public MappingProfile()
         {
             CreateMap<Admin, GetAdminDTO>();
+            CreateMap<ModifyAdminDTO, Admin>();
+            //CreateMap<ModifyAdminDTO, Admin>()
+            //    .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
         }
     }
 }

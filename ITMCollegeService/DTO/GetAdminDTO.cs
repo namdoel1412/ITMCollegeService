@@ -12,8 +12,8 @@ namespace ITMCollegeService.DTO
         public string Email { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public int Gender_id { get; set; }
-        public string Created_at { get; set; }
-        public string Updated_at { get; set; }
+        public int GenderId { get; set; }
+        public DateTime? Created_At { get; set; }
+        public DateTime? Updated_At { get; set; }
     }
 }

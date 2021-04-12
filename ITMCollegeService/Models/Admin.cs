@@ -7,10 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Admin
     {
-        public Admin()
-        {
-            News = new HashSet<News>();
-        }
 
         public int Id { get; set; }
         public string Name { get; set; }

@@ -30,7 +30,7 @@ namespace ITMCollegeService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.CongigureMySqlConnection<ITMCollegeContext>(Configuration);
+            services.ConfigureMySqlConnection<ITMCollegeContext>(Configuration);
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
@@ -39,8 +39,8 @@ namespace ITMCollegeService
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+            services.ConfigureRepositoryWrapper();
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IAdminRepo, AdminRepo_2>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
