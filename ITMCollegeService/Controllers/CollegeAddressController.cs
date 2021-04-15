@@ -13,11 +13,11 @@ namespace ITMCollegeService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CollegeAddressController : ControllerBase
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
-        public CategoryController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public CollegeAddressController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace ITMCollegeService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var sources = await _repositoryWrapper.CategoryRepo.GetDataByIdAsync(id);
+            var sources = await _repositoryWrapper.CollegeAddressRepo.GetDataByIdAsync(id);
             if (sources == null)
             {
                 return NotFound();
@@ -34,7 +34,7 @@ namespace ITMCollegeService.Controllers
             else
             {
                 //_logger.LogInfo($"Return array Sources filted by hotelGUID");
-                var sourceResults = _mapper.Map<GetCategoryDTO>(sources);
+                var sourceResults = _mapper.Map<GetCollegeAddressDTO>(sources);
                 return Ok(sourceResults);
             }
         }
@@ -42,7 +42,7 @@ namespace ITMCollegeService.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetAllData()
         {
-            var sources = await _repositoryWrapper.CategoryRepo.GetDatas();
+            var sources = await _repositoryWrapper.CollegeAddressRepo.GetDatas();
             if (sources == null)
             {
                 return NotFound();
@@ -50,14 +50,14 @@ namespace ITMCollegeService.Controllers
             else
             {
                 //_logger.LogInfo($"Return array Sources filted by hotelGUID");
-                var sourceResults = _mapper.Map<IEnumerable<GetCategoryDTO>>(sources);
+                var sourceResults = _mapper.Map<IEnumerable<GetCollegeAddressDTO>>(sources);
                 return Ok(sourceResults);
             }
         }
 
         //[Authorize(Policy = "CreateSource")]
         [HttpPost("")]
-        public async Task<IActionResult> CreateSource([FromBody] ModifyCategoryDTO source)
+        public async Task<IActionResult> CreateSource([FromBody] ModifyCollegeAddressDTO source)
         {
             try
             {
@@ -69,8 +69,8 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var sourceEntity = _mapper.Map<Category>(source);
-                return Ok(await _repositoryWrapper.CategoryRepo.NewData(sourceEntity));
+                var sourceEntity = _mapper.Map<Collegeaddress>(source);
+                return Ok(await _repositoryWrapper.CollegeAddressRepo.NewData(sourceEntity));
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace ITMCollegeService.Controllers
 
         //[Authorize(Policy = "UpdateSource")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateCategoryDTO source)
+        public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateCollegeAddressDTO source)
         {
             try
             {
@@ -97,13 +97,13 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var sourceEntity = await _repositoryWrapper.CategoryRepo.GetDataByIdAsync(id);
+                var sourceEntity = await _repositoryWrapper.CollegeAddressRepo.GetDataByIdAsync(id);
                 if (sourceEntity == null)
                 {
                     return NotFound();
                 }
                 _mapper.Map(source, sourceEntity);
-                _repositoryWrapper.CategoryRepo.UpdateData(sourceEntity);
+                _repositoryWrapper.CollegeAddressRepo.UpdateData(sourceEntity);
                 await _repositoryWrapper.SaveAsync();
                 return Ok("Update successfully!");
             }
@@ -131,12 +131,12 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var entity = await _repositoryWrapper.CategoryRepo.GetDataByIdAsync(id);
+                var entity = await _repositoryWrapper.CollegeAddressRepo.GetDataByIdAsync(id);
                 if (entity == null)
                 {
                     return NotFound();
                 }
-                return Ok(await _repositoryWrapper.CategoryRepo.DeleteData(entity));
+                return Ok(await _repositoryWrapper.CollegeAddressRepo.DeleteData(entity));
             }
             catch (Exception ex)
             {

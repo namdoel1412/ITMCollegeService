@@ -17,6 +17,8 @@ namespace ITMCollegeService.Repositories
         private IAdminRepo _AdminRepo;
         private ICategoryNewsRepo _CategoryNewsRepo;
         private ICategoryRepo _CategoryRepo;
+        private ICollegeRepo _CollegeRepo;
+        private ICollegeAddressRepo _CollegeAddressRepo;
         private IContactRepo _ContactRepo;
         private ICourseRepo _CourseRepo;
         private IDepartmentRepo _DepartmentRepo;
@@ -64,6 +66,30 @@ namespace ITMCollegeService.Repositories
                     _CategoryRepo = new CategoryRepo(itmCollegeContext);
                 }
                 return _CategoryRepo;
+            }
+        }
+
+        public ICollegeRepo CollegeRepo
+        {
+            get
+            {
+                if (_CollegeRepo == null)
+                {
+                    _CollegeRepo = new CollegeRepo(itmCollegeContext);
+                }
+                return _CollegeRepo;
+            }
+        }
+
+        public ICollegeAddressRepo CollegeAddressRepo
+        {
+            get
+            {
+                if (_CollegeAddressRepo == null)
+                {
+                    _CollegeAddressRepo = new CollegeAddressRepo(itmCollegeContext);
+                }
+                return _CollegeAddressRepo;
             }
         }
 

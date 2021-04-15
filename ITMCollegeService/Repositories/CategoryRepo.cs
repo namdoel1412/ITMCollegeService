@@ -14,7 +14,7 @@ namespace ITMCollegeService.Repositories
         Task<Category> GetDataByIdAsync(int id);
         Task<Category> NewData(Category source);
         void UpdateData(Category source);
-        Task<bool> DeleteData(Category id);
+        Task<bool> DeleteData(Category entity);
     }
     public class CategoryRepo : RepositoryBase<Category>, ICategoryRepo
     {
@@ -40,11 +40,11 @@ namespace ITMCollegeService.Repositories
             return await _itmCollegeContext.Categories.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Admin> NewData(Category source)
+        public async Task<Category> NewData(Category source)
         {
             Create(source);
             await SaveAsync();
-            var entity = await _itmCollegeContext.Admins.OrderByDescending(item => item.Id).FirstOrDefaultAsync();
+            var entity = await _itmCollegeContext.Categories.OrderByDescending(item => item.Id).FirstOrDefaultAsync();
             return entity;
         }
 

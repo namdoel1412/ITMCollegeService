@@ -12,6 +12,8 @@ namespace ITMCollegeService.Contracts
         public IAdminRepo AdminRepo { get; }
         public ICategoryNewsRepo CategoryNewsRepo { get; }
         public ICategoryRepo CategoryRepo { get; }
+        public ICollegeRepo CollegeRepo { get; }
+        public ICollegeAddressRepo CollegeAddressRepo { get; }
         public IContactRepo ContactRepo { get; }
         public ICourseRepo CourseRepo { get; }
         public IDepartmentRepo DepartmentRepo { get; }
