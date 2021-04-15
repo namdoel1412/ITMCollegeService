@@ -14,6 +14,7 @@ namespace ITMCollegeService.Models
         public string Email { get; set; }
         public byte IsMainFacility { get; set; }
         public int? CollegeId { get; set; }
+        public string MapApi { get; set; }
 
         public virtual College College { get; set; }
         public virtual ICollection<Student> Students { get; set; }

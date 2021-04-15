@@ -10,6 +10,7 @@ namespace ITMCollegeService.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public byte IsOnHeader { get; set; }
 
         public virtual ICollection<CategoryNews> CategoryNews { get; set; }
     }

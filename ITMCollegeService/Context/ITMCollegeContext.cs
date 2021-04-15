@@ -99,6 +99,7 @@ namespace ITMCollegeService.Context
                     .IsRequired()
                     .HasMaxLength(100)
                     .HasColumnName("name");
+                entity.Property(e => e.IsOnHeader).HasColumnName("isOnHeader");
             });
 
             modelBuilder.Entity<CategoryNews>(entity =>
@@ -146,6 +147,10 @@ namespace ITMCollegeService.Context
                     .IsRequired()
                     .HasMaxLength(100)
                     .HasColumnName("name");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500)
+                    .HasColumnName("description");
             });
 
             modelBuilder.Entity<Collegeaddress>(entity =>
@@ -172,6 +177,10 @@ namespace ITMCollegeService.Context
                 entity.Property(e => e.Phone)
                     .HasMaxLength(100)
                     .HasColumnName("phone");
+
+                entity.Property(e => e.MapApi)
+                    .HasMaxLength(1000)
+                    .HasColumnName("mapApi");
 
                 entity.HasOne(d => d.College)
                     .WithMany(p => p.Collegeaddresses)

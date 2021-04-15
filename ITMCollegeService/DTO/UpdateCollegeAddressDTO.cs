@@ -12,5 +12,6 @@ namespace ITMCollegeService.DTO
         public string Email { get; set; }
         public byte IsMainFacility { get; set; }
         public int? CollegeId { get; set; }
+        public string MapApi { get; set; }
     }
 }

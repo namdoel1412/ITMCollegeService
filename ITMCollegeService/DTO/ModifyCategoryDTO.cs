@@ -8,5 +8,6 @@ namespace ITMCollegeService.DTO
     public class ModifyCategoryDTO
     {
         public string Name { get; set; }
+        public byte IsOnHeader { get; set; }
     }
 }
