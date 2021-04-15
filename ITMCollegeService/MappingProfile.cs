@@ -47,6 +47,56 @@ namespace ITMCollegeService
             CreateMap<UpdateCourseDTO, Course>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
 
+            CreateMap<Department, GetDepartmentDTO>();
+            CreateMap<ModifyDepartmentDTO, Department>();
+            CreateMap<UpdateDepartmentDTO, Department>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Faculty, GetFacultyDTO>();
+            CreateMap<ModifyFacultyDTO, Faculty>();
+            CreateMap<UpdateFacultyDTO, Faculty>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Gender, GetGenderDTO>();
+            CreateMap<ModifyGenderDTO, Gender>();
+            CreateMap<UpdateGenderDTO, Gender>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<News, GetNewsDTO>();
+            CreateMap<ModifyNewsDTO, News>();
+            CreateMap<UpdateNewsDTO, News>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Previouseducation, GetPreviousEducationDTO>();
+            CreateMap<ModifyPreviousEducationDTO, Previouseducation>();
+            CreateMap<UpdatePreviousEducationDTO, Previouseducation>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Role, GetRoleDTO>();
+            CreateMap<ModifyRoleDTO, Role>();
+            CreateMap<UpdateRoleDTO, Role>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Semester, GetSemesterDTO>();
+            CreateMap<ModifySemesterDTO, Semester>();
+            CreateMap<UpdateSemesterDTO, Semester>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Status, GetStatusDTO>();
+            CreateMap<ModifyStatusDTO, Status>();
+            CreateMap<UpdateStatusDTO, Status>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Student, GetStudentDTO>();
+            CreateMap<ModifyStudentDTO, Student>();
+            CreateMap<UpdateStudentDTO, Student>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<Subject, GetSubjectDTO>();
+            CreateMap<ModifySubjectDTO, Subject>();
+            CreateMap<UpdateSubjectDTO, Subject>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
         }
     }
 }
