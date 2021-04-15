@@ -21,6 +21,8 @@ namespace ITMCollegeService.Context
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryNews> CategoryNews { get; set; }
+        public virtual DbSet<College> Colleges { get; set; }
+        public virtual DbSet<Collegeaddress> Collegeaddresses { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
@@ -124,6 +126,57 @@ namespace ITMCollegeService.Context
                     .HasForeignKey(d => d.NewsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKcategory_n779857");
+            });
+
+            modelBuilder.Entity<College>(entity =>
+            {
+                entity.ToTable("college");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(500)
+                    .HasColumnName("icon");
+
+                entity.Property(e => e.Logo)
+                    .HasMaxLength(500)
+                    .HasColumnName("logo");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Collegeaddress>(entity =>
+            {
+                entity.ToTable("collegeaddress");
+
+                entity.HasIndex(e => e.CollegeId, "college_id");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.CollegeId).HasColumnName("college_id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.IsMainFacility).HasColumnName("isMainFacility");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(100)
+                    .HasColumnName("phone");
+
+                entity.HasOne(d => d.College)
+                    .WithMany(p => p.Collegeaddresses)
+                    .HasForeignKey(d => d.CollegeId)
+                    .HasConstraintName("collegeaddress_ibfk_1");
             });
 
             modelBuilder.Entity<Contact>(entity =>
@@ -275,6 +328,13 @@ namespace ITMCollegeService.Context
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.AdminId).HasColumnName("admin_id");
+
+                entity.Property(e => e.IsBanner).HasColumnName("isBanner")
+                .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Description)
                     .IsRequired()

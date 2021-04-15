@@ -7,10 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class User
     {
-        public User()
-        {
-            UserRoles = new HashSet<UserRole>();
-        }
 
         public int Id { get; set; }
         public string Username { get; set; }

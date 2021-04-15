@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ITMCollegeService.DTO;
-using ITMCollegeService.Model;
+using ITMCollegeService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +14,9 @@ namespace ITMCollegeService
         {
             CreateMap<Admin, GetAdminDTO>();
             CreateMap<ModifyAdminDTO, Admin>();
-            //CreateMap<ModifyAdminDTO, Admin>()
-            //    .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+            CreateMap<UpdateAdminDTO, Admin>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
         }
     }
 }

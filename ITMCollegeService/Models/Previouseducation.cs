@@ -7,10 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Previouseducation
     {
-        public Previouseducation()
-        {
-            Students = new HashSet<Student>();
-        }
 
         public int Id { get; set; }
         public string School { get; set; }

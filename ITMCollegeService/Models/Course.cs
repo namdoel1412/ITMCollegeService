@@ -7,11 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Course
     {
-        public Course()
-        {
-            Subjects = new HashSet<Subject>();
-        }
-
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }

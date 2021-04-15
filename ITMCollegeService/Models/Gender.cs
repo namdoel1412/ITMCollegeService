@@ -7,11 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Gender
     {
-        public Gender()
-        {
-            Admins = new HashSet<Admin>();
-            Students = new HashSet<Student>();
-        }
 
         public int Id { get; set; }
         public string Name { get; set; }

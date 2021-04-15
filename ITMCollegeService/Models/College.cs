@@ -5,12 +5,13 @@ using System.Collections.Generic;
 
 namespace ITMCollegeService.Models
 {
-    public partial class Semester
+    public partial class College
     {
-
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Icon { get; set; }
+        public string Logo { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Collegeaddress> Collegeaddresses { get; set; }
     }
 }

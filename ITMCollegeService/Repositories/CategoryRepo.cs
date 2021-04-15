@@ -4,18 +4,53 @@ using System.Linq;
 using System.Threading.Tasks;
 using ITMCollegeService.Models;
 using ITMCollegeService.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ITMCollegeService.Repositories
 {
     public interface ICategoryRepo
     {
-
+        Task<IEnumerable<Category>> GetDatas();
+        Task<Category> GetDataByIdAsync(int id);
+        Task<Category> NewData(Category source);
+        void UpdateData(Category source);
+        Task<bool> DeleteData(Category id);
     }
     public class CategoryRepo : RepositoryBase<Category>, ICategoryRepo
     {
         public CategoryRepo(ITMCollegeContext iTMCollegeContext) : base(iTMCollegeContext)
         {
 
+        }
+        public async Task<bool> DeleteData(Category entity)
+        {
+            _itmCollegeContext.Categories.Remove(entity);
+            await SaveAsync();
+            return true;
+        }
+
+        public async Task<Category> GetDataByIdAsync(int id)
+        {
+            return await FindByCondition(item => item.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Category>> GetDatas()
+        {
+            return await _itmCollegeContext.Categories.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Admin> NewData(Category source)
+        {
+            Create(source);
+            await SaveAsync();
+            var entity = await _itmCollegeContext.Admins.OrderByDescending(item => item.Id).FirstOrDefaultAsync();
+            return entity;
+        }
+
+        public void UpdateData(Category source)
+        {
+            Update(source);
         }
     }
 }

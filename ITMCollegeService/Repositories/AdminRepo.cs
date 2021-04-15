@@ -14,7 +14,7 @@ namespace ITMCollegeService.Repositories
         Task<Admin> GetDataByIdAsync(int id);
         Task<Admin> NewData(Admin source);
         void UpdateData(Admin source);
-        Task<bool> DeleteData(int id);
+        Task<bool> DeleteData(Admin id);
     }
     public class AdminRepo : RepositoryBase<Admin>, IAdminRepo
     {
@@ -23,14 +23,10 @@ namespace ITMCollegeService.Repositories
 
         }
 
-        public async Task<bool> DeleteData(int id)
+        public async Task<bool> DeleteData(Admin entity)
         {
-            var entity = await _itmCollegeContext.Admins.FirstOrDefaultAsync(item => item.Id == id);
-            if (entity == null)
-            {
-                return false;
-            }
             _itmCollegeContext.Admins.Remove(entity);
+            await SaveAsync();
             return true;
         }
 
@@ -48,6 +44,7 @@ namespace ITMCollegeService.Repositories
         public async Task<Admin> NewData(Admin source)
         {
             Create(source);
+            await SaveAsync();
             var entity = await _itmCollegeContext.Admins.OrderByDescending(item => item.Id).FirstOrDefaultAsync();
             return entity;
         }

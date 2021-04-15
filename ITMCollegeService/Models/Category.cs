@@ -7,10 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Category
     {
-        public Category()
-        {
-            CategoryNews = new HashSet<CategoryNews>();
-        }
 
         public int Id { get; set; }
         public string Name { get; set; }

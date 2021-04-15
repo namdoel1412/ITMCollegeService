@@ -29,8 +29,6 @@ namespace ITMCollegeService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.ConfigureMySqlConnection<ITMCollegeContext>(Configuration);
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
@@ -39,8 +37,10 @@ namespace ITMCollegeService
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-            services.ConfigureRepositoryWrapper();
+            services.ConfigureMySqlConnection<ITMCollegeContext>(Configuration);
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureRepositoryWrapper();
+            services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {

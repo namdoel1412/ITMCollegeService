@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using ITMCollegeService.Contracts;
-using ITMCollegeService.DTO;
-using ITMCollegeService.Models;
-using ITMCollegeService.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,11 +11,11 @@ namespace ITMCollegeService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
-        public AdminController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public CategoryController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
@@ -27,7 +24,7 @@ namespace ITMCollegeService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var sources = await _repositoryWrapper.AdminRepo.GetDataByIdAsync(id);
+            var sources = await _repositoryWrapper.ContactRepo.GetDataByIdAsync(id);
             if (sources == null)
             {
                 return NotFound();
@@ -144,7 +141,7 @@ namespace ITMCollegeService.Controllers
                 }
                 return Ok(await _repositoryWrapper.AdminRepo.DeleteData(entity));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.InnerException != null)
                 {
@@ -153,38 +150,5 @@ namespace ITMCollegeService.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //private readonly IAdminRepo _adminRepo;
-        //public AdminController(IAdminRepo adminRepo)
-        //{
-        //    _adminRepo = adminRepo;
-        //}
-        //[HttpGet("")]
-        //public async Task<IActionResult> GetAllAdmins()
-        //{
-        //    return Ok(await _adminRepo.GetAllAdmins());
-        //}
-
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetAllAdmins(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(await _adminRepo.GetAdminById(id));
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        if (ex.InnerException != null)
-        //        {
-        //            return BadRequest(ex.Message + "," + ex.InnerException.Message);
-        //        }
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("")]
-        //public async Task<IActionResult> CreateAdminAsync([FromBody]CreateAdminDTO body)
-        //{
-        //    return Ok(await _adminRepo.CreateAdminAsync(body));
-        //}
     }
 }

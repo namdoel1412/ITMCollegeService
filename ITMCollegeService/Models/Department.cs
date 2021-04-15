@@ -7,12 +7,6 @@ namespace ITMCollegeService.Models
 {
     public partial class Department
     {
-        public Department()
-        {
-            Courses = new HashSet<Course>();
-            Students = new HashSet<Student>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
