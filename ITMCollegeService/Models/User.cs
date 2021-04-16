@@ -15,6 +15,7 @@ namespace ITMCollegeService.Models
 
         public virtual Status Status { get; set; }
         public virtual Student Student { get; set; }
+        public virtual ICollection<Admin> Admins { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -87,6 +87,11 @@ namespace ITMCollegeService.Context
                     .HasForeignKey(d => d.GenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKadmin34186");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Admins)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKadmin12912");
             });
 
             modelBuilder.Entity<Category>(entity =>
