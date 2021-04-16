@@ -97,6 +97,16 @@ namespace ITMCollegeService
             CreateMap<UpdateSubjectDTO, Subject>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
 
+            CreateMap<User, GetUserDTO>();
+            CreateMap<ModifyUserDTO, User>();
+            CreateMap<UpdateUserDTO, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
+            CreateMap<UserRole, GetUserRoleDTO>();
+            CreateMap<ModifyUserRoleDTO, UserRole>();
+            CreateMap<UpdateUserRoleDTO, UserRole>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcmember) => srcmember != null));
+
         }
     }
 }

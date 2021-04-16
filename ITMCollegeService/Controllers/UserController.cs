@@ -13,11 +13,11 @@ namespace ITMCollegeService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryNewsController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
-        public CategoryNewsController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public UserController(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace ITMCollegeService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var sources = await _repositoryWrapper.CategoryNewsRepo.GetDataByIdAsync(id);
+            var sources = await _repositoryWrapper.UserRepo.GetDataByIdAsync(id);
             if (sources == null)
             {
                 return NotFound();
@@ -34,7 +34,7 @@ namespace ITMCollegeService.Controllers
             else
             {
                 //_logger.LogInfo($"Return array Sources filted by hotelGUID");
-                var sourceResults = _mapper.Map<GetCategoryNewsDTO>(sources);
+                var sourceResults = _mapper.Map<GetUserDTO>(sources);
                 return Ok(sourceResults);
             }
         }
@@ -42,7 +42,7 @@ namespace ITMCollegeService.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetAllData()
         {
-            var sources = await _repositoryWrapper.CategoryNewsRepo.GetDatas();
+            var sources = await _repositoryWrapper.UserRepo.GetDatas();
             if (sources == null)
             {
                 return NotFound();
@@ -50,14 +50,14 @@ namespace ITMCollegeService.Controllers
             else
             {
                 //_logger.LogInfo($"Return array Sources filted by hotelGUID");
-                var sourceResults = _mapper.Map<IEnumerable<GetCategoryNewsDTO>>(sources);
+                var sourceResults = _mapper.Map<IEnumerable<GetUserDTO>>(sources);
                 return Ok(sourceResults);
             }
         }
 
         //[Authorize(Policy = "CreateSource")]
         [HttpPost("")]
-        public async Task<IActionResult> CreateSource([FromBody] ModifyCategoryNewsDTO source)
+        public async Task<IActionResult> CreateSource([FromBody] ModifyUserDTO source)
         {
             try
             {
@@ -69,8 +69,8 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var sourceEntity = _mapper.Map<CategoryNews>(source);
-                return Ok(_mapper.Map<GetCategoryNewsDTO>(await _repositoryWrapper.CategoryNewsRepo.NewData(sourceEntity)));
+                var sourceEntity = _mapper.Map<User>(source);
+                return Ok(await _repositoryWrapper.UserRepo.NewData(sourceEntity));
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace ITMCollegeService.Controllers
 
         //[Authorize(Policy = "UpdateSource")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateCategoryNewsDTO source)
+        public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateUserDTO source)
         {
             try
             {
@@ -97,23 +97,13 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var sourceEntity = await _repositoryWrapper.CategoryNewsRepo.GetDataByIdAsync(id);
+                var sourceEntity = await _repositoryWrapper.UserRepo.GetDataByIdAsync(id);
                 if (sourceEntity == null)
                 {
                     return NotFound();
                 }
-                int newsId = sourceEntity.NewsId;
-                int categoryId = sourceEntity.CategoryId;
                 _mapper.Map(source, sourceEntity);
-                if(source.NewsId == 0)
-                {
-                    sourceEntity.NewsId = newsId;
-                }
-                if (source.CategoryId == 0)
-                {
-                    sourceEntity.CategoryId = categoryId;
-                }
-                _repositoryWrapper.CategoryNewsRepo.UpdateData(sourceEntity);
+                _repositoryWrapper.UserRepo.UpdateData(sourceEntity);
                 await _repositoryWrapper.SaveAsync();
                 return Ok("Update successfully!");
             }
@@ -141,12 +131,12 @@ namespace ITMCollegeService.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var entity = await _repositoryWrapper.CategoryNewsRepo.GetDataByIdAsync(id);
+                var entity = await _repositoryWrapper.UserRepo.GetDataByIdAsync(id);
                 if (entity == null)
                 {
                     return NotFound();
                 }
-                return Ok(await _repositoryWrapper.CategoryNewsRepo.DeleteData(entity));
+                return Ok(await _repositoryWrapper.UserRepo.DeleteData(entity));
             }
             catch (Exception ex)
             {
