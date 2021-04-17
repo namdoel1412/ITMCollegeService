@@ -55,7 +55,7 @@ namespace ITMCollegeService.Controllers
             {
                 Msg = "Login successfully",
                 Token = tokenString,
-                Info = await _repositoryWrapper.UserRepo.CheckUser(user)
+                Info = _mapper.Map<GetUserDTO>(await _repositoryWrapper.UserRepo.CheckUser(user))
             };
             return info;
         }

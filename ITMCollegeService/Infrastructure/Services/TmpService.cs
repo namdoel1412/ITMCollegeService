@@ -1,4 +1,6 @@
-﻿using ITMCollegeService.Contracts;
+﻿using AutoMapper;
+using ITMCollegeService.Contracts;
+using ITMCollegeService.DTO;
 using ITMCollegeService.Identity;
 using ITMCollegeService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -18,10 +20,12 @@ namespace ITMCollegeService.Infrastructure.Services
     {
         private IConfiguration _config;
         private IRepositoryWrapper _repositoryWrapper;
-        public TmpService(IConfiguration config, IRepositoryWrapper repositoryWrapper)
+        private IMapper _mapper;
+        public TmpService(IConfiguration config, IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _config = config;
             _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
         public async Task<bool> Authenticate(LoginModel user)
@@ -65,7 +69,7 @@ namespace ITMCollegeService.Infrastructure.Services
 
             bool checkExistedUser = await _repositoryWrapper.UserRepo.CheckExistedUser(new LoginModel() { Username = request.Username, Password = request.Password });
             if (checkExistedUser) return new LoginReturnDTO(ErrCode.UserExist);
-            User body = await _repositoryWrapper.UserRepo.NewData(request);
+            var body = _mapper.Map<GetUserDTO>(await _repositoryWrapper.UserRepo.NewData(request));
             return new LoginReturnDTO { Msg = "Register successfully!", Info = body };
         }
     }

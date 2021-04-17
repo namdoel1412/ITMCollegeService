@@ -15,5 +15,6 @@ namespace ITMCollegeService.DTO
         public int GenderId { get; set; }
         public DateTime? Created_At { get; set; }
         public DateTime? Updated_At { get; set; }
+        public int UserId { get; set; }
     }
 }

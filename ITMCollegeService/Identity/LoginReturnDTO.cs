@@ -1,4 +1,5 @@
-﻿using ITMCollegeService.Models;
+﻿using ITMCollegeService.DTO;
+using ITMCollegeService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,6 @@ namespace ITMCollegeService.Identity
         public string Msg { get; set; } = "";
         public string Token { get; set; } = "";
         public string Setting { get; set; } = "";
-        public User Info { get; set; }
+        public GetUserDTO Info { get; set; }
     }
 }

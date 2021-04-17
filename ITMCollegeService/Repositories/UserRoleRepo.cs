@@ -65,7 +65,8 @@ namespace ITMCollegeService.Repositories
                 .ToListAsync();
             foreach(var item in lstRoleId)
             {
-                res.Add(item.Role.Name);
+                var tmp = await _itmCollegeContext.Roles.Where(x => x.Id == item.Id).FirstOrDefaultAsync();
+                res.Add(tmp.Name);
             }
 
             return res;
