@@ -68,7 +68,7 @@ namespace ITMCollegeService.Repositories
         {
             var entity = await _itmCollegeContext.Users.Where(x => x.Username == user.Username)
                 .FirstOrDefaultAsync();
-            return entity == null;
+            return entity != null;
         }
     }
 }

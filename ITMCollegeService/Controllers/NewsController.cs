@@ -2,12 +2,14 @@
 using ITMCollegeService.Contracts;
 using ITMCollegeService.DTO;
 using ITMCollegeService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ITMCollegeService.Controllers
 {
@@ -56,6 +58,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "CreateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("")]
         public async Task<IActionResult> CreateSource([FromBody] ModifyNewsDTO source)
         {
@@ -84,6 +87,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "UpdateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateNewsDTO source)
         {
@@ -118,6 +122,7 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteData(int id)
         {

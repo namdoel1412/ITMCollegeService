@@ -25,6 +25,7 @@ namespace ITMCollegeService.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -41,6 +42,7 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllData()
@@ -59,6 +61,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "CreateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("")]
         public async Task<IActionResult> CreateSource([FromBody] ModifyAdminDTO source)
         {
@@ -87,6 +90,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "UpdateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateAdminDTO source)
         {
@@ -126,6 +130,7 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteData(int id)
         {

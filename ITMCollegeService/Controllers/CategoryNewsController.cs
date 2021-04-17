@@ -2,6 +2,7 @@
 using ITMCollegeService.Contracts;
 using ITMCollegeService.DTO;
 using ITMCollegeService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -55,6 +56,7 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //[Authorize(Policy = "CreateSource")]
         [HttpPost("")]
         public async Task<IActionResult> CreateSource([FromBody] ModifyCategoryNewsDTO source)
@@ -84,6 +86,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "UpdateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateCategoryNewsDTO source)
         {

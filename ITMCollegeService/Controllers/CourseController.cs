@@ -2,6 +2,7 @@
 using ITMCollegeService.Contracts;
 using ITMCollegeService.DTO;
 using ITMCollegeService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -56,6 +57,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "CreateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("")]
         public async Task<IActionResult> CreateSource([FromBody] ModifyCourseDTO source)
         {

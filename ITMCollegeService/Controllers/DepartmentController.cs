@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ITMCollegeService.Controllers
 {
@@ -56,6 +57,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "CreateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("")]
         public async Task<IActionResult> CreateSource([FromBody] ModifyDepartmentDTO source)
         {
@@ -84,6 +86,7 @@ namespace ITMCollegeService.Controllers
         }
 
         //[Authorize(Policy = "UpdateSource")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSource(int id, [FromBody] UpdateDepartmentDTO source)
         {
@@ -119,6 +122,7 @@ namespace ITMCollegeService.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteData(int id)
         {
             try
