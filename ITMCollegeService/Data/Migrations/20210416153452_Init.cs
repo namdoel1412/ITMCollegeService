@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ITMCollegeService.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,11 +14,28 @@ namespace ITMCollegeService.Data.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false)
+                    name = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
+                    isOnHeader = table.Column<byte>(type: "tinyint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_category", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "college",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
+                    icon = table.Column<string>(type: "varchar(500) CHARACTER SET utf8mb4", maxLength: 500, nullable: true),
+                    logo = table.Column<string>(type: "varchar(500) CHARACTER SET utf8mb4", maxLength: 500, nullable: true),
+                    description = table.Column<string>(type: "varchar(500) CHARACTER SET utf8mb4", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_college", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,6 +123,30 @@ namespace ITMCollegeService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "collegeaddress",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    address = table.Column<string>(type: "varchar(500) CHARACTER SET utf8mb4", maxLength: 500, nullable: false),
+                    phone = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: true),
+                    email = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: true),
+                    isMainFacility = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    college_id = table.Column<int>(type: "int", nullable: true),
+                    mapApi = table.Column<string>(type: "varchar(1000) CHARACTER SET utf8mb4", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_collegeaddress", x => x.id);
+                    table.ForeignKey(
+                        name: "collegeaddress_ibfk_1",
+                        column: x => x.college_id,
+                        principalTable: "college",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "department",
                 columns: table => new
                 {
@@ -122,31 +163,6 @@ namespace ITMCollegeService.Data.Migrations
                         name: "FKdepartment546596",
                         column: x => x.faculty_id,
                         principalTable: "faculty",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "admin",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: false),
-                    email = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
-                    address = table.Column<string>(type: "varchar(250) CHARACTER SET utf8mb4", maxLength: 250, nullable: false),
-                    phone = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
-                    gender_id = table.Column<int>(type: "int", nullable: false),
-                    created_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    updated_at = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_admin", x => x.id);
-                    table.ForeignKey(
-                        name: "FKadmin34186",
-                        column: x => x.gender_id,
-                        principalTable: "gender",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -225,24 +241,33 @@ namespace ITMCollegeService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "news",
+                name: "admin",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "varchar(1000) CHARACTER SET utf8mb4", maxLength: 1000, nullable: false),
-                    admin_id = table.Column<int>(type: "int", nullable: true),
+                    name = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
+                    address = table.Column<string>(type: "varchar(250) CHARACTER SET utf8mb4", maxLength: 250, nullable: false),
+                    phone = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
+                    gender_id = table.Column<int>(type: "int", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    updated_at = table.Column<DateTime>(type: "datetime", nullable: true)
+                    updated_at = table.Column<DateTime>(type: "datetime", nullable: true),
+                    user_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_news", x => x.id);
+                    table.PrimaryKey("PK_admin", x => x.id);
                     table.ForeignKey(
-                        name: "FKnews66529",
-                        column: x => x.admin_id,
-                        principalTable: "admin",
+                        name: "FKadmin12912",
+                        column: x => x.user_id,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FKadmin34186",
+                        column: x => x.gender_id,
+                        principalTable: "gender",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -266,11 +291,18 @@ namespace ITMCollegeService.Data.Migrations
                     previousEducation_id = table.Column<int>(type: "int", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true),
                     updated_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    department_id = table.Column<int>(type: "int", nullable: true)
+                    department_id = table.Column<int>(type: "int", nullable: true),
+                    CollegeaddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_student", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_student_collegeaddress_CollegeaddressId",
+                        column: x => x.CollegeaddressId,
+                        principalTable: "collegeaddress",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FKstudent120757",
                         column: x => x.gender_id,
@@ -352,6 +384,31 @@ namespace ITMCollegeService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "news",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "varchar(1000) CHARACTER SET utf8mb4", maxLength: 1000, nullable: false),
+                    admin_id = table.Column<int>(type: "int", nullable: true),
+                    created_at = table.Column<DateTime>(type: "datetime", nullable: true),
+                    updated_at = table.Column<DateTime>(type: "datetime", nullable: true),
+                    status = table.Column<byte>(type: "tinyint unsigned", nullable: false, defaultValueSql: "((1))"),
+                    isBanner = table.Column<byte>(type: "tinyint unsigned", nullable: false, defaultValueSql: "((0))")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_news", x => x.id);
+                    table.ForeignKey(
+                        name: "FKnews66529",
+                        column: x => x.admin_id,
+                        principalTable: "admin",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "category_news",
                 columns: table => new
                 {
@@ -378,6 +435,11 @@ namespace ITMCollegeService.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "FKadmin12912",
+                table: "admin",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
                 name: "FKadmin34186",
                 table: "admin",
                 column: "gender_id");
@@ -391,6 +453,11 @@ namespace ITMCollegeService.Data.Migrations
                 name: "FKcategory_n984463",
                 table: "category_news",
                 column: "category_id");
+
+            migrationBuilder.CreateIndex(
+                name: "college_id",
+                table: "collegeaddress",
+                column: "college_id");
 
             migrationBuilder.CreateIndex(
                 name: "FKcontact152934",
@@ -436,6 +503,11 @@ namespace ITMCollegeService.Data.Migrations
                 name: "FKstudent907803",
                 table: "student",
                 column: "faculty_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_student_CollegeaddressId",
+                table: "student",
+                column: "CollegeaddressId");
 
             migrationBuilder.CreateIndex(
                 name: "user_id",
@@ -494,6 +566,9 @@ namespace ITMCollegeService.Data.Migrations
                 name: "category");
 
             migrationBuilder.DropTable(
+                name: "collegeaddress");
+
+            migrationBuilder.DropTable(
                 name: "previouseducation");
 
             migrationBuilder.DropTable(
@@ -503,10 +578,10 @@ namespace ITMCollegeService.Data.Migrations
                 name: "role");
 
             migrationBuilder.DropTable(
-                name: "user");
+                name: "admin");
 
             migrationBuilder.DropTable(
-                name: "admin");
+                name: "college");
 
             migrationBuilder.DropTable(
                 name: "department");
@@ -515,13 +590,16 @@ namespace ITMCollegeService.Data.Migrations
                 name: "semester");
 
             migrationBuilder.DropTable(
-                name: "status");
+                name: "user");
 
             migrationBuilder.DropTable(
                 name: "gender");
 
             migrationBuilder.DropTable(
                 name: "faculty");
+
+            migrationBuilder.DropTable(
+                name: "status");
         }
     }
 }

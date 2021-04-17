@@ -4,5 +4,26 @@
         <name>ITMCollegeService</name>
     </assembly>
     <members>
+        <member name="M:ITMCollegeService.Identity.RegisterDTO.#ctor">
+            <summary>
+            initialize registry info
+            </summary>
+        </member>
+        <member name="P:ITMCollegeService.Identity.RegisterDTO.Username">
+            <summary>
+            email 
+            </summary>
+            
+        </member>
+        <member name="P:ITMCollegeService.Identity.RegisterDTO.PhoneNumber">
+            <summary>
+            phone number
+            </summary>
+        </member>
+        <member name="P:ITMCollegeService.Identity.RegisterDTO.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
     </members>
 </doc>

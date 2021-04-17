@@ -61,11 +61,12 @@ namespace ITMCollegeService.Data.Migrations
                         .HasColumnName("updated_at");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId" }, "FKadmin12912");
 
                     b.HasIndex(new[] { "GenderId" }, "FKadmin34186");
 

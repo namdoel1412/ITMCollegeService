@@ -50,6 +50,8 @@ namespace ITMCollegeService.Context
 
                 entity.HasIndex(e => e.GenderId, "FKadmin34186");
 
+                entity.HasIndex(e => e.UserId, "FKadmin12912");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Address)
@@ -81,6 +83,8 @@ namespace ITMCollegeService.Context
                 entity.Property(e => e.Updated_At)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Gender)
                     .WithMany(p => p.Admins)

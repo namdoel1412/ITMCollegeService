@@ -3,6 +3,7 @@ using ITMCollegeService.Contracts;
 using ITMCollegeService.DTO;
 using ITMCollegeService.Models;
 using ITMCollegeService.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,6 +42,7 @@ namespace ITMCollegeService.Controllers
         }
 
         [HttpGet("")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllData()
         {
             var sources = await _repositoryWrapper.AdminRepo.GetDatas();

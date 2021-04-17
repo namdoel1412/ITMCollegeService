@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ITMCollegeService.Models;
 using ITMCollegeService.Context;
 using Microsoft.EntityFrameworkCore;
+using ITMCollegeService.Identity;
 
 namespace ITMCollegeService.Repositories
 {
@@ -15,6 +16,9 @@ namespace ITMCollegeService.Repositories
         Task<User> NewData(User source);
         void UpdateData(User source);
         Task<bool> DeleteData(User entity);
+        Task<User> CheckUser(LoginModel user);
+        Task<bool> CheckExistedUser(LoginModel user);
+
     }
     public class UserRepo : RepositoryBase<User>, IUserRepo
     {
@@ -51,6 +55,20 @@ namespace ITMCollegeService.Repositories
         public void UpdateData(User source)
         {
             Update(source);
+        }
+
+        public async Task<User> CheckUser(LoginModel user)
+        {
+            var entity = await _itmCollegeContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password)
+                .FirstOrDefaultAsync();
+            return entity;
+        }
+
+        public async Task<bool> CheckExistedUser(LoginModel user)
+        {
+            var entity = await _itmCollegeContext.Users.Where(x => x.Username == user.Username)
+                .FirstOrDefaultAsync();
+            return entity == null;
         }
     }
 }

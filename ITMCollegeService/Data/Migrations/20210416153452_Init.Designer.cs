@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITMCollegeService.Data.Migrations
 {
     [DbContext(typeof(ITMCollegeContext))]
-    [Migration("20210412085553_Initial")]
-    partial class Initial
+    [Migration("20210416153452_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,13 @@ namespace ITMCollegeService.Data.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("updated_at");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "UserId" }, "FKadmin12912");
 
                     b.HasIndex(new[] { "GenderId" }, "FKadmin34186");
 
@@ -75,6 +81,10 @@ namespace ITMCollegeService.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    b.Property<byte>("IsOnHeader")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("isOnHeader");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -109,6 +119,82 @@ namespace ITMCollegeService.Data.Migrations
                     b.HasIndex(new[] { "CategoryId" }, "FKcategory_n984463");
 
                     b.ToTable("category_news");
+                });
+
+            modelBuilder.Entity("ITMCollegeService.Models.College", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
+                        .HasColumnName("icon");
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
+                        .HasColumnName("logo");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("college");
+                });
+
+            modelBuilder.Entity("ITMCollegeService.Models.Collegeaddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
+                        .HasColumnName("address");
+
+                    b.Property<int?>("CollegeId")
+                        .HasColumnType("int")
+                        .HasColumnName("college_id");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnName("email");
+
+                    b.Property<byte>("IsMainFacility")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("isMainFacility");
+
+                    b.Property<string>("MapApi")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000) CHARACTER SET utf8mb4")
+                        .HasColumnName("mapApi");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnName("phone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "CollegeId" }, "college_id");
+
+                    b.ToTable("collegeaddress");
                 });
 
             modelBuilder.Entity("ITMCollegeService.Models.Contact", b =>
@@ -294,11 +380,23 @@ namespace ITMCollegeService.Data.Migrations
                         .HasColumnType("varchar(1000) CHARACTER SET utf8mb4")
                         .HasColumnName("description");
 
+                    b.Property<byte>("IsBanner")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("isBanner")
+                        .HasDefaultValueSql("((0))");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
                         .HasColumnName("name");
+
+                    b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("status")
+                        .HasDefaultValueSql("((1))");
 
                     b.Property<DateTime?>("Updated_At")
                         .HasColumnType("datetime")
@@ -413,6 +511,9 @@ namespace ITMCollegeService.Data.Migrations
                         .HasColumnType("date")
                         .HasColumnName("birthday");
 
+                    b.Property<int?>("CollegeaddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("Created_At")
                         .HasColumnType("datetime")
                         .HasColumnName("created_at");
@@ -477,6 +578,8 @@ namespace ITMCollegeService.Data.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CollegeaddressId");
 
                     b.HasIndex(new[] { "GenderId" }, "FKstudent120757");
 
@@ -592,7 +695,15 @@ namespace ITMCollegeService.Data.Migrations
                         .HasConstraintName("FKadmin34186")
                         .IsRequired();
 
+                    b.HasOne("ITMCollegeService.Models.User", "User")
+                        .WithMany("Admins")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FKadmin12912")
+                        .IsRequired();
+
                     b.Navigation("Gender");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ITMCollegeService.Models.CategoryNews", b =>
@@ -612,6 +723,16 @@ namespace ITMCollegeService.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("News");
+                });
+
+            modelBuilder.Entity("ITMCollegeService.Models.Collegeaddress", b =>
+                {
+                    b.HasOne("ITMCollegeService.Models.College", "College")
+                        .WithMany("Collegeaddresses")
+                        .HasForeignKey("CollegeId")
+                        .HasConstraintName("collegeaddress_ibfk_1");
+
+                    b.Navigation("College");
                 });
 
             modelBuilder.Entity("ITMCollegeService.Models.Contact", b =>
@@ -667,6 +788,10 @@ namespace ITMCollegeService.Data.Migrations
 
             modelBuilder.Entity("ITMCollegeService.Models.Student", b =>
                 {
+                    b.HasOne("ITMCollegeService.Models.Collegeaddress", null)
+                        .WithMany("Students")
+                        .HasForeignKey("CollegeaddressId");
+
                     b.HasOne("ITMCollegeService.Models.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId")
@@ -755,6 +880,16 @@ namespace ITMCollegeService.Data.Migrations
                     b.Navigation("CategoryNews");
                 });
 
+            modelBuilder.Entity("ITMCollegeService.Models.College", b =>
+                {
+                    b.Navigation("Collegeaddresses");
+                });
+
+            modelBuilder.Entity("ITMCollegeService.Models.Collegeaddress", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("ITMCollegeService.Models.Course", b =>
                 {
                     b.Navigation("Subjects");
@@ -810,6 +945,8 @@ namespace ITMCollegeService.Data.Migrations
 
             modelBuilder.Entity("ITMCollegeService.Models.User", b =>
                 {
+                    b.Navigation("Admins");
+
                     b.Navigation("Student");
 
                     b.Navigation("UserRoles");

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ITMCollegeService.Context;
 using Microsoft.EntityFrameworkCore;
+using ITMCollegeService.Identity;
 
 namespace ITMCollegeService.Repositories
 {
@@ -15,6 +16,7 @@ namespace ITMCollegeService.Repositories
         Task<UserRole> NewData(UserRole source);
         void UpdateData(UserRole source);
         Task<bool> DeleteData(UserRole entity);
+        Task<IEnumerable<string>> UserRoles(LoginModel user);
     }
     public class UserRoleRepo : RepositoryBase<UserRole>, IUserRoleRepo
     {
@@ -52,6 +54,21 @@ namespace ITMCollegeService.Repositories
         public void UpdateData(UserRole source)
         {
             Update(source);
+        }
+
+        public async Task<IEnumerable<string>> UserRoles(LoginModel user)
+        {
+            IList<string> res = new List<string>();
+            var entity = await _itmCollegeContext.Users.Where(x => x.Username == user.Username && x.Password == user.Password)
+                .FirstOrDefaultAsync();
+            var lstRoleId = await _itmCollegeContext.UserRoles.Where(x => x.UserId == entity.Id)
+                .ToListAsync();
+            foreach(var item in lstRoleId)
+            {
+                res.Add(item.Role.Name);
+            }
+
+            return res;
         }
     }
 }
