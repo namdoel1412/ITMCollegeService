@@ -347,6 +347,10 @@ namespace ITMCollegeService.Context
 
                 entity.Property(e => e.AdminId).HasColumnName("admin_id");
 
+                entity.Property(e => e.Thumbnail)
+                    .HasMaxLength(500)
+                    .HasColumnName("thumbnail");
+
                 entity.Property(e => e.IsBanner).HasColumnName("isBanner")
                 .HasDefaultValueSql("((0))");
 

@@ -13,6 +13,7 @@ namespace ITMCollegeService.Models
         public int? AdminId { get; set; }
         public DateTime? Created_At { get; set; }
         public DateTime? Updated_At { get; set; }
+        public string Thumbnail { get; set; }
         public byte Status { get; set; }
         public byte IsBanner { get; set; }
 
