@@ -160,5 +160,30 @@ namespace ITMCollegeService.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("NewsId/{newsid}")]
+        public async Task<IActionResult> DeleteCategoriesByNewsId(int newsid)
+        {
+            try
+            {
+                if (newsid <= 0)
+                {
+                    return BadRequest();
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                return Ok(await _repositoryWrapper.CategoryNewsRepo.ClearCategoryNewsById(newsid));
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    return BadRequest(ex.Message + "," + ex.InnerException.Message);
+                }
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

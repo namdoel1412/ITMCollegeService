@@ -15,6 +15,7 @@ namespace ITMCollegeService.Repositories
         Task<CategoryNews> NewData(CategoryNews source);
         void UpdateData(CategoryNews source);
         Task<bool> DeleteData(CategoryNews entity);
+        Task<bool> ClearCategoryNewsById(int newsId);
     }
     public class CategoryNewsRepo : RepositoryBase<CategoryNews>, ICategoryNewsRepo
     {
@@ -46,6 +47,14 @@ namespace ITMCollegeService.Repositories
             await SaveAsync();
             var entity = await _itmCollegeContext.CategoryNews.OrderByDescending(item => item.Id).FirstOrDefaultAsync();
             return entity;
+        }
+
+        public async Task<bool> ClearCategoryNewsById (int newsId)
+        {
+            var entities = await _itmCollegeContext.CategoryNews.Where(item => item.NewsId == newsId).ToListAsync();
+            _itmCollegeContext.CategoryNews.RemoveRange(entities);
+            await SaveAsync();
+            return true;
         }
 
         public void UpdateData(CategoryNews source)
