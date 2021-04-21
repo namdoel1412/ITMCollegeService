@@ -3,14 +3,16 @@ using System;
 using ITMCollegeService.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ITMCollegeService.Data.Migrations
 {
     [DbContext(typeof(ITMCollegeContext))]
-    partial class ITMCollegeContextModelSnapshot : ModelSnapshot
+    [Migration("20210421141200_Init_3")]
+    partial class Init_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

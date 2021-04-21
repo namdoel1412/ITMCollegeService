@@ -128,13 +128,13 @@ namespace ITMCollegeService.Context
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.CategoryNews)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKcategory_n984463");
 
                 entity.HasOne(d => d.News)
                     .WithMany(p => p.CategoryNews)
                     .HasForeignKey(d => d.NewsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKcategory_n779857");
             });
 
