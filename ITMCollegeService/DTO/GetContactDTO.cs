@@ -12,6 +12,8 @@ namespace ITMCollegeService.DTO
         public string Email { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string Name { get; set; }
         public int StatusId { get; set; }
+        public DateTime? Created_At { get; set; }
     }
 }
