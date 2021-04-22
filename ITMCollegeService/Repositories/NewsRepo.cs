@@ -17,6 +17,7 @@ namespace ITMCollegeService.Repositories
         Task<bool> DeleteData(News entity);
         Task<IEnumerable<News>> GetNewsByCategoryId(int categoryId);
         Task<IEnumerable<News>> GetNewsByIsBanner(int isBanner);
+        Task<IEnumerable<News>> GetNewsLimit(int limit);
     }
     public class NewsRepo : RepositoryBase<News>, INewsRepo
     {
@@ -71,6 +72,11 @@ namespace ITMCollegeService.Repositories
         public async Task<IEnumerable<News>> GetNewsByIsBanner(int isBanner)
         {
             return await _itmCollegeContext.News.Where(item => item.IsBanner == isBanner).OrderBy(x => x.Name).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<News>> GetNewsLimit(int limit)
+        {
+            return await _itmCollegeContext.News.OrderByDescending(x => x.Created_At).Take(limit).AsNoTracking().ToListAsync();
         }
     }
 }

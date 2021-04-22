@@ -89,6 +89,22 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [HttpGet("Limit/{limit}")]
+        public async Task<IActionResult> GetDataLimited(int limit)
+        {
+            var sources = await _repositoryWrapper.NewsRepo.GetNewsLimit(limit);
+            if (sources == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //_logger.LogInfo($"Return array Sources filted by hotelGUID");
+                var sourceResults = _mapper.Map<IEnumerable<GetNewsDTO>>(sources);
+                return Ok(sourceResults);
+            }
+        }
+
         //[Authorize(Policy = "CreateSource")]
         [Authorize(Roles = "Admin")]
         [HttpPost("")]

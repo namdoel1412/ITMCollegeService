@@ -220,6 +220,14 @@ namespace ITMCollegeService.Context
                     .HasMaxLength(100)
                     .HasColumnName("phone");
 
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Created_At)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
                 entity.Property(e => e.StatusId).HasColumnName("status_id");
 
                 entity.Property(e => e.Title)
