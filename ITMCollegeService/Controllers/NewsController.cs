@@ -57,6 +57,22 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [HttpGet("CategoryId/{categoryId}")]
+        public async Task<IActionResult> GetDataByCategoryId(int categoryId)
+        {
+            var sources = await _repositoryWrapper.NewsRepo.GetNewsByCategoryId(categoryId);
+            if (sources == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //_logger.LogInfo($"Return array Sources filted by hotelGUID");
+                var sourceResults = _mapper.Map<IEnumerable<GetNewsDTO>>(sources);
+                return Ok(sourceResults);
+            }
+        }
+
         //[Authorize(Policy = "CreateSource")]
         [Authorize(Roles = "Admin")]
         [HttpPost("")]

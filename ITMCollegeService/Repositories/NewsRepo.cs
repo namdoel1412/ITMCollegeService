@@ -15,6 +15,7 @@ namespace ITMCollegeService.Repositories
         Task<News> NewData(News source);
         void UpdateData(News source);
         Task<bool> DeleteData(News entity);
+        Task<IEnumerable<News>> GetNewsByCategoryId(int categoryId);
     }
     public class NewsRepo : RepositoryBase<News>, INewsRepo
     {
@@ -52,6 +53,18 @@ namespace ITMCollegeService.Repositories
         public void UpdateData(News source)
         {
             Update(source);
+        }
+
+        public async Task<IEnumerable<News>> GetNewsByCategoryId(int categoryId)
+        {
+            var entity = await _itmCollegeContext.CategoryNews.Where(item => item.CategoryId == categoryId).ToListAsync();
+            IList<News> result = new List<News>();
+            foreach(var item in entity)
+            {
+                var tmp = await GetDataByIdAsync(item.NewsId);
+                if(tmp != null) result.Add(tmp);
+            }
+            return result;
         }
     }
 }
