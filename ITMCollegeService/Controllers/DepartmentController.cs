@@ -56,6 +56,22 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [HttpGet("FacultyId/{facultyId}")]
+        public async Task<IActionResult> GetAllData(int facultyId)
+        {
+            var sources = await _repositoryWrapper.DepartmentRepo.GetDepartmentsByFacultyId(facultyId);
+            if (sources == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //_logger.LogInfo($"Return array Sources filted by hotelGUID");
+                var sourceResults = _mapper.Map<IEnumerable<GetDepartmentDTO>>(sources);
+                return Ok(sourceResults);
+            }
+        }
+
         //[Authorize(Policy = "CreateSource")]
         [Authorize(Roles = "Admin")]
         [HttpPost("")]

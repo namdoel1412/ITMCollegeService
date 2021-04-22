@@ -73,6 +73,22 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [HttpGet("IsBanner/{isBanner}")]
+        public async Task<IActionResult> GetDataByIsBanner(int isBanner)
+        {
+            var sources = await _repositoryWrapper.NewsRepo.GetNewsByIsBanner(isBanner);
+            if (sources == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //_logger.LogInfo($"Return array Sources filted by hotelGUID");
+                var sourceResults = _mapper.Map<IEnumerable<GetNewsDTO>>(sources);
+                return Ok(sourceResults);
+            }
+        }
+
         //[Authorize(Policy = "CreateSource")]
         [Authorize(Roles = "Admin")]
         [HttpPost("")]

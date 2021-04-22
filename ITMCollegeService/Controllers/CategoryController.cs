@@ -56,6 +56,22 @@ namespace ITMCollegeService.Controllers
             }
         }
 
+        [HttpGet("IsHeader/{isHeader}")]
+        public async Task<IActionResult> GetCategoriesByIsHeader(int isHeader)
+        {
+            var sources = await _repositoryWrapper.CategoryRepo.GetCategoriesByIsHeader(isHeader);
+            if (sources == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //_logger.LogInfo($"Return array Sources filted by hotelGUID");
+                var sourceResults = _mapper.Map<IEnumerable<GetCategoryDTO>>(sources);
+                return Ok(sourceResults);
+            }
+        }
+
         [Authorize(Roles = "Admin")]
         //[Authorize(Policy = "CreateSource")]
         [HttpPost("")]

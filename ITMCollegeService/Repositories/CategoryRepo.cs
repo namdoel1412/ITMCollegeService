@@ -15,6 +15,7 @@ namespace ITMCollegeService.Repositories
         Task<Category> NewData(Category source);
         void UpdateData(Category source);
         Task<bool> DeleteData(Category entity);
+        Task<IEnumerable<Category>> GetCategoriesByIsHeader(int isHeader);
     }
     public class CategoryRepo : RepositoryBase<Category>, ICategoryRepo
     {
@@ -51,6 +52,11 @@ namespace ITMCollegeService.Repositories
         public void UpdateData(Category source)
         {
             Update(source);
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesByIsHeader(int isHeader)
+        {
+            return await _itmCollegeContext.Categories.Where(item => item.IsOnHeader == isHeader).OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
     }
 }

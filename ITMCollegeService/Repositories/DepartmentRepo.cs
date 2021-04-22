@@ -15,6 +15,7 @@ namespace ITMCollegeService.Repositories
         Task<Department> NewData(Department source);
         void UpdateData(Department source);
         Task<bool> DeleteData(Department entity);
+        Task<IEnumerable<Department>> GetDepartmentsByFacultyId(int facultyId);
     }
     public class DepartmentRepo : RepositoryBase<Department>, IDepartmentRepo
     {
@@ -51,6 +52,11 @@ namespace ITMCollegeService.Repositories
         public void UpdateData(Department source)
         {
             Update(source);
+        }
+
+        public async Task<IEnumerable<Department>> GetDepartmentsByFacultyId(int facultyId)
+        {
+            return await _itmCollegeContext.Departments.Where(item => item.FacultyId == facultyId).OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
     }
 }

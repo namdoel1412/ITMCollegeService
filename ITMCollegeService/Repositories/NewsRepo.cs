@@ -16,6 +16,7 @@ namespace ITMCollegeService.Repositories
         void UpdateData(News source);
         Task<bool> DeleteData(News entity);
         Task<IEnumerable<News>> GetNewsByCategoryId(int categoryId);
+        Task<IEnumerable<News>> GetNewsByIsBanner(int isBanner);
     }
     public class NewsRepo : RepositoryBase<News>, INewsRepo
     {
@@ -65,6 +66,11 @@ namespace ITMCollegeService.Repositories
                 if(tmp != null) result.Add(tmp);
             }
             return result;
+        }
+
+        public async Task<IEnumerable<News>> GetNewsByIsBanner(int isBanner)
+        {
+            return await _itmCollegeContext.News.Where(item => item.IsBanner == isBanner).OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
     }
 }
